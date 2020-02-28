@@ -90,15 +90,13 @@ func printMyReview(imdbNumber: String) {
 
 func printMyMoviesByRating() {
     
-        //.. little bit different way to do this ..maybe not necessary
-        let movieArrayTuple = movieArray
-    
-        let sortedMovieArrayTuple = movieArrayTuple.sorted(by: {$0.myRating < $1.myRating})
-        //print(movieArrayTuple[0])
+        //.. sort the movieArray which is an array of tuples... reference tuple fields below by name
+        let sortedMovieArray = movieArray.sorted(by: {$0.myRating < $1.myRating})
+        //print(sortedMovieArray])
         print("\n\nHere are my movies REVIEWS SORTED BY RATING:")
         print("----------------------------------------------------------------------------------------------------------")
     
-        for item in sortedMovieArrayTuple {
+        for item in sortedMovieArray {
             print("\t Name: \(item.movieName)")
             print("\t\t My Raing: \(item.myRating)")
             print("\t\t My Movie Comments: \(item.myComments)")
