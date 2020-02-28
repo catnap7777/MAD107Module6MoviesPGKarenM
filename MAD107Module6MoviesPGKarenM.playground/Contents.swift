@@ -27,7 +27,7 @@ var movieArray = [(IMDB:"tt0325980", movieName:"Pirates of the Caribbean: The Cu
                    myRating:"C", myComments:"This is the one with Colin Firth. It's way too long and kind of slow...")
 ]
 
-//.. Used MCH303 Android App to pick off data for this dictionary(key/tuple)  :)
+//.. Used MCH303 Android App to pick off data for this dictionary(key/value-tuple)  :)
 var movieDictionary = ["tt0325980": (movieName:"Pirates of the Caribbean: The Curse of the Black Pearl", movieYear:"2003", movieType:"movie",
                                      moviePosterURL:"https://m.media-amazon.com/images/M/MV5BNGYyZGM5MGMtYTY2Ni00M2Y1LWIzNjQtYWUzM2VlNGVhMDNhXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg"),
                        "tt1201607": (movieName:"Harry Potter and the Deathly Hallows: Part 2", movieYear:"2011", movieType:"movie",
@@ -51,42 +51,64 @@ var movieDictionary = ["tt0325980": (movieName:"Pirates of the Caribbean: The Cu
                        "tt0320691": (movieName:"Underworld", movieYear:"2003", movieType:"movie",
                                      moviePosterURL:"https://m.media-amazon.com/images/M/MV5BMTk1OTc2ZmUtODU0Yy00NGJiLWJmNmQtODI0MzBjODk3MjI4L2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyMjUzOTY1NTc@._V1_SX300.jpg")
 ]
-//....................................................................................................................................................
-func printMyReview() {
-    
-    let movieArrayTuple = movieArray
-    
-    let sortedMovieArrayTuple = movieArrayTuple.sorted(by: {$0.myRating < $1.myRating})
-    //print(movieArrayTuple[0])
-    print("\n\nHere are my movies reviews sort by rating:")
-    print("------------------------------------------------------------------------------------------------")
-    
-    for item in sortedMovieArrayTuple {
-        print("\t Name: \(item.movieName)")
-        print("\t\t My Raing: \(item.myRating)")
-        print("\t\t My Movie Comments: \(item.myComments)")
-        print("................................................................................................")
-    }
-}
-//....................................................................................................................................................
-func printMyMovies() {
-    
-    let movieTuple = movieDictionary.values
-    let sortedMovieTuple = movieTuple.sorted(by: {$0.movieName < $1.movieName})
-    //print(movieTuple)
-    print("\n\nHere are my movies sorted by name:")
-    print("------------------------------------------------------------------------------------------------")
-    
-    
-    for item in sortedMovieTuple {
-        print("\t Name: \(item.movieName)")
-        print("\t\t Year: \(item.movieYear) Type: \(item.movieType)")
-        print("................................................................................................")
-    }
-    
-}
+
 //....................................................................................................................................................
 
+func printMyMovies() {
+    
+    let sortedMovieDictionary = movieDictionary.sorted(by: {$0.value.movieName < $1.value.movieName})
+    //print(sortedMovieDictionary)
+    print("\n\nHere are my movies SORTED BY MOVIE NAME and my associated REVIEWS if there are any:")
+    print("----------------------------------------------------------------------------------------------------------")
+    
+    //..get movies from movieDictionary
+    for (k,v) in sortedMovieDictionary {
+        print("\t Name: \(v.movieName)")
+        print("\t\t Year: \(v.movieYear) Type: \(v.movieType)")
+        
+        //..get/print associated reviews from movieArray
+        printMyReview(imdbNumber: k)
+    
+        print("..........................................................................................................")
+    }
+}
+
+//....................................................................................................................................................
+
+func printMyReview(imdbNumber: String) {
+    
+    //.. get/print movie review info from movieArray where the incoming IMDB number matches the IMDB number in the tuple in the array (ie. in the array of tuples)
+    for item in movieArray where item.IMDB == imdbNumber {
+       
+        print("\t\t\t My Raing: \(item.myRating)")
+        print("\t\t\t My Movie Comments: \(item.myComments)")
+        print("..........................................................................................................")
+    }
+}
+
+//....................................................................................................................................................
+
+func printMyMoviesByRating() {
+    
+        //.. little bit different way to do this ..maybe not necessary
+        let movieArrayTuple = movieArray
+    
+        let sortedMovieArrayTuple = movieArrayTuple.sorted(by: {$0.myRating < $1.myRating})
+        //print(movieArrayTuple[0])
+        print("\n\nHere are my movies REVIEWS SORTED BY RATING:")
+        print("----------------------------------------------------------------------------------------------------------")
+    
+        for item in sortedMovieArrayTuple {
+            print("\t Name: \(item.movieName)")
+            print("\t\t My Raing: \(item.myRating)")
+            print("\t\t My Movie Comments: \(item.myComments)")
+            print("..........................................................................................................")
+        }
+}
+
+//....................................................................................................................................................
+
+
 printMyMovies()
-printMyReview()
+printMyMoviesByRating()
 
