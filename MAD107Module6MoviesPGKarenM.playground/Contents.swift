@@ -3,10 +3,12 @@ import Cocoa
 var str = "Hello, playground"
 
 //.. Movie Array - array of Tuples
+//.. Note: myRating contains a comma(,) in some data instances for a letter without a plus(+) or minus(-) so that sorting occurs properly...
+//..    ie. "A," => "A"
 var movieArray = [(IMDB:"tt0325980", movieName:"Pirates of the Caribbean: The Curse of the Black Pearl",
-                   myRating:"A", myComments:"Great family movie!"),
+                   myRating:"A,", myComments:"Great family movie!"),
                   (IMDB:"tt1201607", movieName:"Harry Potter and the Deathly Hallows: Part 2",
-                   myRating:"B", myComments:"Great family movie but the ending didn't totaly follow the book!"),
+                   myRating:"B+", myComments:"Great family movie but the ending didn't totaly follow the book!"),
                   (IMDB:"tt0076759", movieName:"Star Wars: Episode IV - A New Hope",
                    myRating:"A+", myComments:"Great scifi movie! Started all of the great \"space\" movies :)"),
                   (IMDB:"tt0120737", movieName:"The Lord of the Rings: The Fellowship of the Ring",
@@ -18,13 +20,13 @@ var movieArray = [(IMDB:"tt0325980", movieName:"Pirates of the Caribbean: The Cu
                   (IMDB:"tt0120762", movieName:"Mulan",
                    myRating:"A+", myComments:"Love this movie! I've watched it many, many times with my daughter <3"),
                   (IMDB:"tt1596363", movieName:"The Big Short",
-                   myRating:"B", myComments:"Great movie about the banks and dishonest lending..."),
+                   myRating:"B,", myComments:"Great movie about the banks and dishonest lending..."),
                   (IMDB:"tt0414387", movieName:"Pride & Prejudice",
                    myRating:"A+", myComments:"One of my favorites! Imo, better than the Colin Firth version"),
                   (IMDB:"tt0320691", movieName:"Underworld",
                    myRating:"B-", myComments:"Great action movie! Good SciFi series. A little bloody though..."),
                   (IMDB:"tt0112130", movieName:"Pride and Prejudice",
-                   myRating:"C", myComments:"This is the one with Colin Firth. It's way too long and kind of slow...")
+                   myRating:"C,", myComments:"This is the one with Colin Firth. It's way too long and kind of slow...")
 ]
 
 //.. Used MCH303 Android App to pick off data for this dictionary(key/value-tuple)  :)
@@ -80,7 +82,7 @@ func printMyReview(imdbNumber: String) {
     //.. get/print movie review info from movieArray where the incoming IMDB number matches the IMDB number in the tuple in the array (ie. in the array of tuples)
     for item in movieArray where item.IMDB == imdbNumber {
        
-        print("\t\t\t My Raing: \(item.myRating)")
+        print("\t\t\t My Rating: \(item.myRating)")
         print("\t\t\t My Movie Comments: \(item.myComments)")
         print("..........................................................................................................")
     }
@@ -97,8 +99,21 @@ func printMyMoviesByRating() {
         print("----------------------------------------------------------------------------------------------------------")
     
         for item in sortedMovieArray {
+            
             print("\t Name: \(item.movieName)")
-            print("\t\t My Raing: \(item.myRating)")
+            
+            let tempRating = item.myRating
+            
+            //.. comma was used in data for sorting purposes... here it is "removed" for printing....
+            switch tempRating {
+            case "A,","B,","C,","D,","F,":
+                let mySubstring = tempRating.prefix(1)
+                print("\t\t My Rating: \(mySubstring)")
+            default:
+                print("\t\t My Rating: \(item.myRating)")
+            }
+            
+            //print("\t\t My Raing: \(item.myRating)")
             print("\t\t My Movie Comments: \(item.myComments)")
             print("..........................................................................................................")
         }
